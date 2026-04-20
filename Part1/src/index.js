@@ -1,5 +1,5 @@
-import { gameLogic } from "./gameLogic.js";
-import { ui } from "./ui.js";
+import GameLogic from "./gameLogic.js";
+import UI from "./ui.js";
 
 /*  Overview
     Domino Drop presents a grid of face-down dominos and one visible target domino.
@@ -17,6 +17,8 @@ import { ui } from "./ui.js";
 
 
 // -------------------- Main Flow --------------------
+const gameLogic = new GameLogic();
+const ui = new UI();
 function init() {
     ui.cacheDominoElements();
     gameLogic.fillDominos();

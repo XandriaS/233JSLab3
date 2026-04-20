@@ -19,7 +19,7 @@ export default class Game {
         this.currentPlayerIndex = 0;
         
         this.diceSet = new DiceSet();
-        
+        this.diceLeft = 6;
         this.isGameOver = false;
         this.dieChosen = 0; //This represents if a die was reserved, and allows a reroll to be done.
 
@@ -55,6 +55,7 @@ export default class Game {
             this.diceSet.rollAll();
             this.dieChosen = 0;
             this.firstTurn = false;
+            this.diceLeft = this.diceLeft - this.dieChosen;
         }
     }
 

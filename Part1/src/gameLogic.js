@@ -15,15 +15,17 @@ function Domino(leftPips, rightPips) {
     this.rightPips = rightPips;
 }
 
-export const gameLogic = {
-    lives: STARTING_LIVES,
-    removedCount: 0,
-    currentTargetIndex: NUMBER_OF_DOMINOS,
-    dominos: [],
-    currentPick: -1,
-    failedPickHistory: {},
+export default class GameLogic {
+    constructor(){
+        this.lives = STARTING_LIVES;
+        this.removedCount = 0;
+        this.currentTargetIndex = NUMBER_OF_DOMINOS;
+        this.dominos = [];
+        this.currentPick = -1;
+        this.failedPickHistory = {};
+    }
 
-    fillDominos: function () {
+    fillDominos() {
         // TODO: fill the dominos array with random domino objects and a starting target.
         this.dominos = [];
         let targetLeft = 0;
@@ -50,9 +52,9 @@ export const gameLogic = {
         }
         //technically I believe the game is still sometimes unwinnable. if a board generates that is 11 dominos of 12 pip value and 9 dominos of 2 pip value you still cannot win.
         this.dominos.push(new Domino(targetLeft, targetRight));
-    },
+    }
 
-    shuffleGridDominos: function () {
+    shuffleGridDominos() {
         // TODO: shuffle the grid dominos array randomly.
 
         const newarray = this.dominos;
@@ -61,25 +63,25 @@ export const gameLogic = {
             [newarray[i], newarray[randomIndex]] = [newarray[randomIndex], newarray[i]];
         }
         
-    },
+    }
 
-    pickDomino: function (index) {
+    pickDomino(index) {
         // TODO: record the player's pick by setting currentPick.
         this.currentPick = index;
-    },
+    }
 
 
-    getTotalPips: (domino) => domino.leftPips + domino.rightPips,
+    getTotalPips = (domino) => domino.leftPips + domino.rightPips
     
 
-    isHigherThanTarget: function () {
+    isHigherThanTarget() {
         // TODO: return true when the picked domino total is greater than the target total.
         const picked = this.dominos[this.currentPick];
         const target = this.dominos[this.currentTargetIndex]
         return (this.getTotalPips(picked) > this.getTotalPips(target));
-    },
+    }
 
-    acceptPick: function () {
+    acceptPick() {
         this.removedCount++;
 
         if (this.removedCount > HALF_CLEARED_COUNT) {
@@ -93,9 +95,9 @@ export const gameLogic = {
         }
 
         return false;
-    },
+    }
 
-    rejectPick: function () {
+    rejectPick() {
         const pickIndex = this.currentPick;
         const hasFailedBefore = this.failedPickHistory[pickIndex] === true;
 
@@ -106,17 +108,17 @@ export const gameLogic = {
 
         this.failedPickHistory[pickIndex] = true;
         return false;
-    },
+    }
 
-    hasClearedBoard: function () {
+    hasClearedBoard() {
         return this.removedCount === NUMBER_OF_DOMINOS;
-    },
+    }
 
-    isOutOfLives: function () {
+    isOutOfLives() {
         return this.lives <= 0;
-    },
+    }
 
-    resetPick: function () {
+    resetPick() {
         // TODO: reset currentPick to -1 for the next turn.
         this.currentPick = -1;
     }
