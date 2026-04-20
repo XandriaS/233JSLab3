@@ -135,19 +135,7 @@ function renderDice() {
             if (isFirstRoll) return; // Cannot hold before the game starts
             
             // Check legality of the click before allowing the hold
-            if (!die.isHeld) {
-                const validation = game.diceSet.canHold(die);
-                if (validation !== true) {
-                    showMessage(validation);
-                    return;
-                }
-            } else {
-                const validation = game.diceSet.canUnhold(die);
-                if (validation !== true) {
-                    showMessage(validation);
-                    return;
-                }
-            }
+            
             
             showMessage(""); // Clear any previous error message on a success
             die.toggleHold();

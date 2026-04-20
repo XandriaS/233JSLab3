@@ -61,37 +61,7 @@ export default class DiceSet {
             if (die.value === 4) has4 = true;
         }
 
-        return has6 && has5 && has4;
-    }
-
-    // Validates if the player is legally allowed to hold a newly clicked die.
-    canHold(die) {
-        if ((die.value === 2 || die.value === 3 || die.value === 5 || die.value === 6) && !this.isQualified()) return "You need a 1 and a 4 to take this die";
-        if (die.value === 1 && this.hasOne && !this.isQualified()) return "You already have a 1! Additional 1s can be taken after you have both a 1 and a 4";
-        if (die.value === 4 && this.hasFour && !this.isQualified()) return "You already have a 4! Additional 1s can be taken after you have both a 1 and a 4";
-        // if (die.value === 5 && this.hasCaptain && !this.isQualified()) return "You already have a Captain! Additional 5s are Cargo.";
-        // if (die.value === 4 && (!this.hasShip || !this.hasCaptain)) return "You must secure a Captain (5) before keeping a Crew!";
-        // if (die.value < 4 && !this.isQualified()) return "You cannot keep Cargo dice until you have a Ship, Captain, and Crew!";
-        return true;
-    }
-
-    // Validates if the player is legally allowed to un-keep a clicked die.
-    canUnhold(die) {
-        if (die.value === 1 && this.hasOne) {
-            let held1Count = 0;
-            for (const d of this.dice) {
-                if (d.isHeld && d.value === 1) held1Count++;
-            }
-            if (held1Count === 1) return "You must have more than a single 1!";
-        }
-        if (die.value === 4 && this.hasFour) {
-            let held4Count = 0;
-            for (const d of this.dice) {
-                if (d.isHeld && d.value === 4) held4Count++;
-            }
-            if (held4Count === 1) return "You must have more than a single 4!";
-        }
-        return true;
+        return has1 && has4;
     }
 
     getCurrentCargoScore() {
@@ -111,10 +81,6 @@ export default class DiceSet {
     }
 
     reset() {
-        this.hasShip = false;
-        this.hasCaptain = false;
-        this.hasCrew = false;
-        
         for (const die of this.dice) {
             die.reset();
         }
